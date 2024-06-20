@@ -10,10 +10,19 @@ const testDir = defineBddConfig({
 export default defineConfig({
   testDir,
   reporter: [cucumberReporter('html', { outputFile: 'cucumber-report/report.html' })],
+
   projects: [
+
     {
-      name: 'chromium',
+      name: "chrome:latest:Windows 11@lambdatest",
+      use: {
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
+      name: 'local-chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+
   ]
 });

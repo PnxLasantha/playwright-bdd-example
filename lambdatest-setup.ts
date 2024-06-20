@@ -1,6 +1,13 @@
-import { test as base } from 'playwright-bdd';
+/**
+ * Add the file in your test suite to run tests on LambdaTest.
+ * Import `test` object from this file in the tests.
+ */
+
+import * as base from "@playwright/test";
 import path from "path";
-import {chromium} from "playwright";
+import { chromium } from "playwright";
+
+// LambdaTest capabilities
 const capabilities = {
     browserName: "Chrome", // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
     browserVersion: "latest",
@@ -8,8 +15,8 @@ const capabilities = {
         platform: "Windows 10",
         build: "Playwright TS Build",
         name: "Playwright Test",
-        user: '',
-        accessKey: '',
+        user: 'lasantha.calderadualinventive',
+        accessKey: 'yZ4K850zgIAmKJPzoWmdQ3cNNR4FDw4kUs7ZirhYBij8k54JLf',
         network: true,
         video: true,
         console: true,
@@ -20,7 +27,6 @@ const capabilities = {
 };
 
 // Patching the capabilities dynamically according to the project name.
-// @ts-ignore
 const modifyCapabilities = (configName, testName) => {
     let config = configName.split("@lambdatest")[0];
     let [browserName, browserVersion, platform] = config.split(":");
@@ -35,8 +41,8 @@ const modifyCapabilities = (configName, testName) => {
         : capabilities["LT:Options"]["platform"];
     capabilities["LT:Options"]["name"] = testName;
 };
-export const test = base.extend({
-  // add your fixtures here
+
+const test = base.test.extend({
     page: async ({ page, playwright }, use, testInfo) => {
         // Configure LambdaTest platform for cross-browser testing
         let fileName = testInfo.file.split(path.sep).pop();
@@ -71,5 +77,6 @@ export const test = base.extend({
             await use(page);
         }
     },
-
 });
+
+export default test;
